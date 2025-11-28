@@ -1,0 +1,24 @@
+name: Auto Release
+
+on:
+  push:
+    branches:
+      - master   # or main
+
+permissions:
+  contents: write   # required to create releases
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: auto-${{ github.run_number }}
+          name: "Auto release ${{ github.run_number }}"
+          generateReleaseNotes: true
